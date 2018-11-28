@@ -1,5 +1,11 @@
 {
   "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
+  "rules": {
+    "interface-name": [true, "never-prefix"],
+    "member-access": false,
+    "object-literal-sort-keys": false,
+    "no-console": [false, "log", "error"]
+  },
   "linterOptions": {
     "exclude": [
       "config/**/*.js",

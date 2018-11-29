@@ -8,4 +8,4 @@ export const ActionCreator = <T, P, E>(type: T) => (payload?: P, error?: E): Act
     type,
     payload,
     error,
-})
+});

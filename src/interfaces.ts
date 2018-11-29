@@ -18,5 +18,10 @@ export interface User {
 
 export interface SearchQuery {
     text: string;
-    ordering: 'NameAscending' | 'NameDescending';
+    ordering: SearchQueryOrdering;
+}
+
+export enum SearchQueryOrdering {
+    NameAscending = 'Name Ascending',
+    NameDescending = 'Name Descending'
 }

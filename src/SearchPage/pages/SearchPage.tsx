@@ -1,8 +1,13 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { Dataset, SearchQuery } from 'src/interfaces';
+import { Dataset, SearchQuery, SearchQueryOrdering } from 'src/interfaces';
 import { SubmitQueryActionCreator } from 'src/SearchPage/reducer';
+
+import { Grid } from '@material-ui/core';
+import { reduxForm } from 'redux-form';
+import { GridContainer } from 'src/shared/components/GridContainer';
+import { SearchBar } from '../components/SearchBar';
 
 interface SearchPageProps {
     selectedDataset?: Dataset;
@@ -18,35 +23,26 @@ class SearchPageComponent extends React.Component<SearchPageProps> {
 
     render() {
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col s12 m8">
-                        <div className="row">
-                            <div className="input-field col s12 blue-text text-lighten-2">
-                                <input id="query" type="text" className="validate"/>
-                                <label htmlFor="query">Search</label>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <a className="waves-effect waves-light blue lighten-2 btn" onClick={this.onSubmit}>Submit</a>
-                        </div>
-                    </div>
-                    <div className="col s12 m4">
-                        Details
-                    </div>
-                </div>
-            </div>
+            <GridContainer spacing={24}>
+                <Grid item={true} xs={12}>
+                    <SearchBarForm />
+                </Grid>
+            </GridContainer>
         );
     }
 
     onSubmit() {
         this.props.onSearch({
             text: '' + Math.random(),
-            ordering: 'NameAscending'
+            ordering: SearchQueryOrdering.NameAscending
         });
     }
 
 }
+
+const SearchBarForm = reduxForm({
+    form: 'search'
+})(SearchBar);
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     onSearch: (query: SearchQuery) => dispatch(SubmitQueryActionCreator(query))

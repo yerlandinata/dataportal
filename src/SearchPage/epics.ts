@@ -6,7 +6,9 @@ export const searchPageEpics = combineEpics(
     (action$: ActionsObservable<SubmitQueryAction>) => action$.pipe(
         ofType('SubmitQuery'),
         map((action) => SubmitQueryDoneActionCreator([{
+            id: 1,
             title: action.payload ? action.payload.text : 'aaa',
+            description: 'this is a good dataset dude',
             type: 'BigQuery',
             columns: ['a', 'b'],
             createdDate: 123,

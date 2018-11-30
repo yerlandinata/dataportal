@@ -1,5 +1,7 @@
 export interface Dataset {
+    id: number;
     title: string;
+    description: string;
     type: DatasetType;
     columns: string[];
     createdDate: number;

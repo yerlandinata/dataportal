@@ -1,20 +1,10 @@
 import * as React from 'react';
 
-import { blue } from '@material-ui/core/colors';
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 
 import { Grid } from '@material-ui/core';
 import { SearchPage } from 'src/SearchPage/pages/SearchPage';
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      light: blue[300],
-      main: blue[500],
-      dark: blue[700],
-    },
-  },
-});
+import { theme } from './theme';
 
 class App extends React.Component {
   public render() {

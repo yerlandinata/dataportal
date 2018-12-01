@@ -7,11 +7,11 @@ import { GridContainer } from 'src/shared/components/GridContainer';
 import { InputSelect } from 'src/shared/components/InputSelect';
 import { InputText } from 'src/shared/components/InputText';
 
-export const SearchBar: React.SFC<InjectedFormProps> = (props: InjectedFormProps) => (
+export const SearchBar: React.SFC<InjectedFormProps> = (props) => (
     <form onSubmit={props.handleSubmit}>
-        <GridContainer item={true} xs={12}>
+        <Grid container={true} item={true} xs={12}>
             {/* Search InputText */}
-            <GridContainer item={true} spacing={8} alignItems="flex-end" xs={12} md={8}>
+            <GridContainer item={true} spacing={8} alignItems="flex-end" xs={12} sm={6} md={8}>
                 <Grid item={true}>
                     <Search />
                 </Grid>
@@ -22,7 +22,7 @@ export const SearchBar: React.SFC<InjectedFormProps> = (props: InjectedFormProps
                 </Grid>
             </GridContainer>
             {/* Search Order by */}
-            <GridContainer item={true} spacing={8} alignItems="flex-end" xs={12} md={4}>
+            <GridContainer item={true} spacing={8} alignItems="flex-end" xs={12} sm={6} md={4}>
                 <Grid item={true}>
                     <SortByAlpha />
                 </Grid>
@@ -36,7 +36,7 @@ export const SearchBar: React.SFC<InjectedFormProps> = (props: InjectedFormProps
                     </FormControl>
                 </Grid>
             </GridContainer>
-        </GridContainer>
+        </Grid>
     </form>
 );
 

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { WrappedFieldMetaProps } from 'redux-form';
 
 export interface ReduxFormInputProps {
@@ -6,5 +5,4 @@ export interface ReduxFormInputProps {
     label: any;
     type: any;
     meta: WrappedFieldMetaProps;
-    children?: React.ReactNode;
 }

@@ -9,22 +9,24 @@ interface DatasetListItemProps {
     maxDescriptionChars?: number;
 }
 
-export const DatasetListItem: React.SFC<DatasetListItemProps> = (props: DatasetListItemProps) => (
+export const DatasetListItem: React.SFC<DatasetListItemProps> = (props) => (
     <Paper elevation={props.selected ? 3: 1}>
         <GridContainer spacing={8} direction="column">
             <Grid item={true}>
-                <Typography variant="h6" component="h4">{props.dataset.title}</Typography>
+                <Typography variant="subtitle1">{props.dataset.title}</Typography>
             </Grid>
             <Grid container={true} item={true} direction="row" spacing={16} justify="space-between">
                 <Grid item={true} xs={12} md={9}>
-                    <Typography component="p">
+                    <Typography variant="body1" component="p">
                         {props.dataset.description.substring(0, props.maxDescriptionChars) +
                             (props.maxDescriptionChars ?
                                 (props.dataset.description.length > props.maxDescriptionChars ? '...' : '') : '')}
                     </Typography>
                 </Grid>
                 <Grid item={true}>
-                    <Button variant="contained" size="small" disableRipple={true} disableTouchRipple={true} >{props.dataset.type}</Button>
+                    <Button href="#dataset-details" variant="contained" size="small" disableRipple={true} disableTouchRipple={true} >
+                        {props.dataset.type}
+                    </Button>
                 </Grid>
             </Grid>
         </GridContainer>

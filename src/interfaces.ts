@@ -1,5 +1,6 @@
 export interface Dataset {
     id: number;
+    url: string;
     title: string;
     description: string;
     type: DatasetType;
@@ -10,12 +11,16 @@ export interface Dataset {
     maintainer: string;
 }
 
-export type DatasetType = 'BigQuery' | 'CSV' | 'Text';
+export enum DatasetType {
+    BigQuery = 'BigQuery Table',
+    CSV = 'Comma Separated Values',
+    Text = 'Unstructured Text',
+}
 
 export interface User {
     name: string;
-    title: string;
-    role: 'member' | 'admin';
+    role: 'Member' | 'Admin';
+    picUrl?: string;
 }
 
 export interface SearchQuery {

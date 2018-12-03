@@ -21,6 +21,11 @@ export const theme = createMuiTheme({
       }
     },
     overrides: {
+        MuiList: {
+          root: {
+            width: '100%'
+          }
+        },
         MuiPaper: {
           root: {
               margin: '0.3em',

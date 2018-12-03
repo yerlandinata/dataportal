@@ -1,4 +1,4 @@
-import { DatasetBrief, SearchQuery } from "src/interfaces";
+import { Dataset, DatasetBrief, SearchQuery } from "src/interfaces";
 import { Action, ActionCreator } from "src/redux/action";
 import { SearchPageState } from "src/SearchPage/interfaces";
 
@@ -11,17 +11,34 @@ export type SubmitQueryFailAction = Action<'SubmitQueryFail', null, Error>;
 export const SubmitQueryDoneActionCreator = ActionCreator<'SubmitQueryDone', DatasetBrief[], null>('SubmitQueryDone');
 export type SubmitQueryDoneAction = Action<'SubmitQueryDone', DatasetBrief[], null>;
 
-const initialState: SearchPageState = {
+export const FetchDatasetActionCreator = ActionCreator<'FetchDataset', DatasetBrief, null>('FetchDataset');
+export type FetchDatasetAction = Action<'FetchDataset', DatasetBrief, null>;
 
+export const FetchDatasetFailActionCreator = ActionCreator<'FetchDatasetFail', null, null>('FetchDatasetFail');
+export type FetchDatasetFailAction = Action<'FetchDatasetFail', null, Error>;
+
+export const FetchDatasetDoneActionCreator = ActionCreator<'FetchDatasetDone', Dataset, null>('FetchDatasetDone');
+export type FetchDatasetDoneAction = Action<'FetchDatasetDone', Dataset, null>;
+
+const initialState: SearchPageState = {
+    currentSearchQuery: {
+        text: '',
+    },
+    isLoadingDatasetDetail: false,
+    isLoadingDatasetList: false,
 };
 
 export const searchPageReducer = (state: SearchPageState = initialState, 
-    action: SubmitQueryAction | SubmitQueryDoneAction | SubmitQueryFailAction): SearchPageState => {
+    action: SubmitQueryAction | SubmitQueryDoneAction | SubmitQueryFailAction | 
+            FetchDatasetAction | FetchDatasetDoneAction | FetchDatasetFailAction): SearchPageState => {
     switch (action.type) {
         case 'SubmitQuery':
             return {
                 ...state,
-                currentSearchQuery: action.payload
+                currentSearchQuery: {
+                    text: action.payload!.text ? action.payload!.text : state.currentSearchQuery.text,
+                    ordering: action.payload!.ordering ? action.payload!.ordering : state.currentSearchQuery.ordering
+                }
             };
         case 'SubmitQueryDone':
             return {
@@ -32,6 +49,23 @@ export const searchPageReducer = (state: SearchPageState = initialState,
             return {
                 ...state,
                 currentDatasetList: [],
+            };
+        case 'FetchDataset':
+            return {
+                ...state,
+                isLoadingDatasetDetail: true
+            };
+        case 'FetchDatasetDone':
+            return {
+                ...state,
+                currentDatasetSelected: action.payload,
+                isLoadingDatasetDetail: false
+            };
+        case 'FetchDatasetFail':
+            return {
+                ...state,
+                currentDatasetSelected: undefined,
+                isLoadingDatasetDetail: false
             };
         default: return state;
     }

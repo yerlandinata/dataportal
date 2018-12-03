@@ -30,7 +30,7 @@ export interface User {
 
 export interface SearchQuery {
     text: string;
-    ordering: SearchQueryOrdering;
+    ordering?: SearchQueryOrdering;
 }
 
 export enum SearchQueryOrdering {

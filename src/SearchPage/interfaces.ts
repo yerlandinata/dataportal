@@ -1,7 +1,9 @@
 import { Dataset, DatasetBrief, SearchQuery } from "src/interfaces";
 
 export interface SearchPageState {
-    currentSearchQuery?: SearchQuery;
+    currentSearchQuery: SearchQuery;
     currentDatasetList?: DatasetBrief[];
     currentDatasetSelected?: Dataset;
+    isLoadingDatasetDetail: boolean;
+    isLoadingDatasetList: boolean;
 }

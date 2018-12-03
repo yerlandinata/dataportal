@@ -20,7 +20,7 @@ const styles: StyleRulesCallback = (theme) => ({
 
 export const DatasetListItem = withStyles(styles)(
     ({dataset, selected, maxDescriptionChars, onClick, classes}: DatasetListItemProps & {classes: any}) => (
-        <ListItem classes={{button: classes.button}} button={true} disableGutters={true} onClick={onClick.bind(null,  dataset)}>
+        <ListItem component="a" classes={{button: classes.button}} button={true} href="#dataset-details" disableGutters={true} onClick={onClick.bind(null,  dataset)}>
             <Grid container={true} direction="column">
                 <Grid item={true}>
                     <Paper elevation={selected ? 3: 0}>
@@ -37,7 +37,7 @@ export const DatasetListItem = withStyles(styles)(
                                     </Typography>
                                 </Grid>
                                 <Grid item={true}>
-                                    <Button href="#dataset-details" variant="contained" size="small" disableRipple={true} disableTouchRipple={true} >
+                                    <Button variant="contained" size="small" disableRipple={true} disableTouchRipple={true} >
                                         {dataset.type}
                                     </Button>
                                 </Grid>

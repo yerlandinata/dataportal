@@ -1,10 +1,10 @@
 import { Button, Grid, Paper, Typography } from '@material-ui/core';
 import * as React from 'react';
-import { Dataset } from 'src/interfaces';
+import { DatasetBrief } from 'src/interfaces';
 import { GridContainer } from 'src/shared/components/GridContainer';
 
 interface DatasetListItemProps {
-    dataset: Dataset;
+    dataset: DatasetBrief;
     selected?: boolean;
     maxDescriptionChars?: number;
 }

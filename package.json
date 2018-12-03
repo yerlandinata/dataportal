@@ -17,6 +17,7 @@
     "redux": "^4.0.1",
     "redux-form": "^7.4.2",
     "redux-observable": "^1.0.0",
+    "restyped-axios": "^2.0.0",
     "rxjs": "^6.3.3"
   },
   "scripts": {

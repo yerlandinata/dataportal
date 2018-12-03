@@ -1,22 +1,28 @@
+import { FormAction } from 'redux-form';
 import { ActionsObservable, combineEpics, ofType } from "redux-observable";
-import { map } from 'rxjs/operators';
-import { DatasetType } from 'src/interfaces';
-import { SubmitQueryAction, SubmitQueryDoneActionCreator } from './reducer';
+import { TypedAxiosInstance } from 'restyped-axios';
+import { from, of } from 'rxjs';
+import { catchError, filter, map, mergeMap } from 'rxjs/operators';
+import { DataPortalApi } from 'src/api';
+import { DatasetBrief } from 'src/interfaces';
+import { SubmitQueryActionCreator, SubmitQueryDoneActionCreator, SubmitQueryFailActionCreator } from './reducer';
 
 export const searchPageEpics = combineEpics(
-    (action$: ActionsObservable<SubmitQueryAction>) => action$.pipe(
-        ofType('SubmitQuery'),
-        map((action) => SubmitQueryDoneActionCreator([{
-            id: 1,
-            url: '#',
-            title: action.payload ? action.payload.text : 'aaa',
-            description: 'this is a good dataset dude',
-            type: DatasetType.BigQuery,
-            columns: ['a', 'b'],
-            createdDate: 123,
-            lastModified: 124,
-            tags: [],
-            maintainer: 'me',
-        }]))
+    (action$: ActionsObservable<FormAction>, _: any, { api }: {api: TypedAxiosInstance<DataPortalApi>}) => action$.pipe(
+        ofType('@@redux-form/CHANGE'),
+        filter((action) => action.meta ? action.meta.field === 'query' : false),
+        mergeMap(
+            (action) => from(api.get('/search/' + action.payload)).pipe(
+                map(({data}) => SubmitQueryDoneActionCreator(data as DatasetBrief[])),
+                catchError(e => of(SubmitQueryFailActionCreator(null, e)))
+            )
+        )
+    ),
+    (action$: ActionsObservable<FormAction>) => action$.pipe(
+        ofType('@@redux-form/CHANGE'),
+        map((action) => SubmitQueryActionCreator({
+            text: action.meta!.field === 'query' ? action.payload : '',
+            ordering: action.meta!.field === 'ordering' ? action.payload : ''
+        }))
     )
 );

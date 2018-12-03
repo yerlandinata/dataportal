@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { Dataset, DatasetType, SearchQuery, SearchQueryOrdering } from 'src/interfaces';
+import { AppState, Dataset, DatasetBrief, DatasetType, SearchQuery, SearchQueryOrdering } from 'src/interfaces';
 import { SubmitQueryActionCreator } from 'src/SearchPage/reducer';
 
 import { Divider, Grid, Typography, withWidth } from '@material-ui/core';
@@ -15,7 +15,9 @@ import { DatasetList } from '../components/DatasetList';
 import { SearchBar } from '../components/SearchBar';
 
 interface SearchPageProps {
-    selectedDataset?: Dataset;
+    selectedDataset: Dataset;
+    datasetListing: DatasetBrief[];
+    searchKeyword: string;
     width: Breakpoint;
     onSearch: typeof SubmitQueryActionCreator;
 }
@@ -57,10 +59,10 @@ class SearchPageComponent extends React.Component<SearchPageProps> {
                         <Grid container={true} item={true} xs={12} sm={6} md={8}>
                             <GridScrollable container={true} item={true} style={this.props.width === 'xs' ? {height: '100vh'} : {}}>
                                 <DatasetList
-                                    datasetList={Array(60).fill(0).map((_, i) => dummyDataset(i))}
+                                    datasetList={this.props.datasetListing || []}
                                     ordering={SearchQueryOrdering.NameAscending}
                                     maxDescriptionChars={64}
-                                    keyword="dummy"
+                                    keyword={this.props.searchKeyword}
                                 />
                             </GridScrollable>
                         </Grid>
@@ -88,8 +90,14 @@ const SearchBarForm = reduxForm({
     form: 'search'
 })(SearchBar);
 
+const mapStateToProps = ({searchPage}: AppState) => ({
+    searchKeyword: searchPage.currentSearchQuery ? searchPage.currentSearchQuery.text : '',
+    datasetListing: searchPage.currentDatasetList,
+    selectedDataset: searchPage.currentDatasetSelected,
+});
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     onSearch: (query: SearchQuery) => dispatch(SubmitQueryActionCreator(query))
 });
 
-export const SearchPage = connect(null, mapDispatchToProps)(withWidth()(SearchPageComponent));
+export const SearchPage = connect(mapStateToProps, mapDispatchToProps)(withWidth()(SearchPageComponent));

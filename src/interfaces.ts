@@ -1,9 +1,14 @@
-export interface Dataset {
+import { SearchPageState } from './SearchPage/interfaces';
+
+export interface DatasetBrief {
     id: number;
-    url: string;
     title: string;
     description: string;
     type: DatasetType;
+}
+
+export interface Dataset extends DatasetBrief {
+    url: string;
     columns: string[];
     createdDate: number;
     lastModified: number;
@@ -31,4 +36,9 @@ export interface SearchQuery {
 export enum SearchQueryOrdering {
     NameAscending = 'Name Ascending',
     NameDescending = 'Name Descending'
+}
+
+export interface AppState {
+    searchPage: SearchPageState;
+    form: any
 }

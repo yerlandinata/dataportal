@@ -5,7 +5,9 @@
     "member-access": false,
     "object-literal-sort-keys": false,
     "no-console": [false, "log", "error"],
-    "semicolon": [true, "always", "ignore-interfaces"]
+    "semicolon": [true, "always", "ignore-interfaces"],
+    "no-namespace": false,
+    "no-unused-variable": false
   },
   "linterOptions": {
     "exclude": [

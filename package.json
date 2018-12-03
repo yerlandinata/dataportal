@@ -26,6 +26,7 @@
     "serve": "^10.1.1"
   },  
   "scripts": {
+    "postinstall": "npm run build",
     "start": "react-scripts-ts start",
     "start:production": "serve -s build",
     "build": "react-scripts-ts build",

@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/node": "^10.12.10",
+    "@types/react": "^16.0.10",
+    "@types/react-dom": "^16.0.1",
+    "typescript": "^3.1.6",
     "@material-ui/core": "^3.6.0",
     "@material-ui/icons": "^3.0.1",
     "@types/material-ui": "^0.21.5",
@@ -18,19 +22,17 @@
     "redux-form": "^7.4.2",
     "redux-observable": "^1.0.0",
     "restyped-axios": "^2.0.0",
-    "rxjs": "^6.3.3"
-  },
+    "rxjs": "^6.3.3",
+    "serve": "^10.1.1"
+  },  
   "scripts": {
     "start": "react-scripts-ts start",
+    "start:production": "serve -s build",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject"
   },
   "devDependencies": {
-    "@types/jest": "^23.3.9",
-    "@types/node": "^10.12.10",
-    "@types/react": "^16.0.10",
-    "@types/react-dom": "^16.0.1",
-    "typescript": "^3.1.6"
+    "@types/jest": "^23.3.9"
   }
 }

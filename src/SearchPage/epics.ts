@@ -13,7 +13,7 @@ export const searchPageEpics = combineEpics(
         ofType('@@redux-form/CHANGE'),
         filter((action) => action.meta ? action.meta.field === 'query' : false),
         mergeMap(
-            (action) => from(api.get('/search/' + action.payload)).pipe(
+            (action) => from(api.get('/search/' + (action.payload! as string).replace(/\s/g, '+')  )).pipe(
                 map(({data}) => SubmitQueryDoneActionCreator(
                     sortDataset(data as DatasetBrief[], state$.value.searchPage.currentSearchQuery.ordering)
                 )),

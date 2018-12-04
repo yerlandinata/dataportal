@@ -7,6 +7,7 @@ interface DatasetListItemProps {
     dataset: DatasetBrief;
     selected?: boolean;
     maxDescriptionChars?: number;
+    style?: any;
     onClick: (dataset: DatasetBrief) => void;
 }
 
@@ -19,8 +20,8 @@ const styles: StyleRulesCallback = (theme) => ({
 });
 
 export const DatasetListItem = withStyles(styles)(
-    ({dataset, selected, maxDescriptionChars, onClick, classes}: DatasetListItemProps & {classes: any}) => (
-        <ListItem component="a" classes={{button: classes.button}} button={true} href="#dataset-details" disableGutters={true} onClick={onClick.bind(null,  dataset)}>
+    ({dataset, selected, maxDescriptionChars, onClick, classes, style}: DatasetListItemProps & {classes: any}) => (
+        <ListItem style={style} component="a" classes={{button: classes.button}} button={true} href="#dataset-details" disableGutters={true} onClick={onClick.bind(null,  dataset)}>
             <Grid container={true} direction="column">
                 <Grid item={true}>
                     <Paper elevation={selected ? 3: 0}>

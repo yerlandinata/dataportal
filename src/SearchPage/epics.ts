@@ -9,11 +9,16 @@ import { FetchDatasetAction, FetchDatasetDoneActionCreator, FetchDatasetFailActi
 import { sortDataset } from './utils';
 
 export const searchPageEpics = combineEpics(
-    (action$: ActionsObservable<FormAction>, state$: StateObservable<AppState>, { api }: {api: TypedAxiosInstance<DataPortalApi>}) => action$.pipe(
-        ofType('@@redux-form/CHANGE'),
-        filter((action) => action.meta ? action.meta.field === 'query' : false),
+    (action$: ActionsObservable<SubmitQueryAction>) => action$.pipe(
+        ofType('SubmitQuery'),
+        filter((action) => (action.payload ? (!(action.payload.text) && !(action.payload.ordering) ) : false)),
+        map((_) => SubmitQueryDoneActionCreator([]))
+    ),
+    (action$: ActionsObservable<SubmitQueryAction>, state$: StateObservable<AppState>, { api }: {api: TypedAxiosInstance<DataPortalApi>}) => action$.pipe(
+        ofType('SubmitQuery'),
+        filter((action) => !!(action.payload!.text)),
         mergeMap(
-            (action) => from(api.get('/search/' + (action.payload! as string).replace(/\s/g, '+')  )).pipe(
+            (action) => from(api.get('/search/' + (action.payload!.text).replace(/\s/g, '+')  )).pipe(
                 map(({data}) => SubmitQueryDoneActionCreator(
                     sortDataset(data as DatasetBrief[], state$.value.searchPage.currentSearchQuery.ordering)
                 )),
@@ -24,8 +29,8 @@ export const searchPageEpics = combineEpics(
     (action$: ActionsObservable<FormAction>) => action$.pipe(
         ofType('@@redux-form/CHANGE'),
         map((action) => SubmitQueryActionCreator({
-            text: action.meta!.field === 'query' ? action.payload : '',
-            ordering: action.meta!.field === 'ordering' ? action.payload : ''
+            text: action.meta!.field === 'query' ? action.payload : undefined,
+            ordering: action.meta!.field === 'ordering' ? action.payload : undefined
         }))
     ),
     (action$: ActionsObservable<SubmitQueryAction>, state$: StateObservable<AppState>) => action$.pipe(

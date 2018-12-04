@@ -36,19 +36,22 @@ export const searchPageReducer = (state: SearchPageState = initialState,
             return {
                 ...state,
                 currentSearchQuery: {
-                    text: action.payload!.text ? action.payload!.text : state.currentSearchQuery.text,
-                    ordering: action.payload!.ordering ? action.payload!.ordering : state.currentSearchQuery.ordering
-                }
+                    text: action.payload!.text !== undefined ? action.payload!.text : state.currentSearchQuery.text,
+                    ordering: action.payload!.ordering !== undefined ? action.payload!.ordering : state.currentSearchQuery.ordering
+                },
+                isLoadingDatasetList: true
             };
         case 'SubmitQueryDone':
             return {
                 ...state,
-                currentDatasetList: action.payload
+                currentDatasetList: action.payload,
+                isLoadingDatasetList: false
             };
         case 'SubmitQueryFail':
             return {
                 ...state,
                 currentDatasetList: [],
+                isLoadingDatasetList: false
             };
         case 'FetchDataset':
             return {

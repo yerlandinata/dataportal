@@ -12,10 +12,10 @@ export const DatasetDetail: React.SFC<DatasetDetailProps> = ({dataset, style}) =
     <Grid container={true} style={style}>
         <GridContainer item={true} direction="column" spacing={16}>
             <Grid item={true}>
-                <Typography variant="h5">{dataset.title}</Typography>
+                <a href={dataset.url} target="_blank" style={{textDecoration: 'none'}}><Typography variant="h5">{dataset.title}</Typography></a>
             </Grid>
             <Grid item={true}>
-                <Button variant="contained" href={dataset.url} color="primary">{DatasetType[dataset.type]}</Button>
+                <Button variant="contained" target="_blank" href={dataset.url} color="primary">{DatasetType[dataset.type]}</Button>
             </Grid>
             <Grid item={true}>
                 <Typography component="p">{dataset.description}</Typography>

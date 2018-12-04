@@ -1,4 +1,4 @@
-import { Divider, Grid, List, ListItem, Typography } from '@material-ui/core';
+import { Divider, Grid, Grow, List, ListItem, Typography } from '@material-ui/core';
 import * as React from 'react';
 import { DatasetBrief, DatasetType, SearchQueryOrdering } from 'src/interfaces';
 import { GridContainer } from 'src/shared/components/GridContainer';
@@ -10,10 +10,12 @@ interface DatasetListProps {
     maxDescriptionChars?: number;
     keyword: string;
     selectedId?: number;
+    isLoading: boolean;
     onDatasetListItemSelected: (dataset: DatasetBrief) => void;
 }
 
-export const DatasetList: React.SFC<DatasetListProps> = ({datasetList, maxDescriptionChars, keyword, selectedId, onDatasetListItemSelected}) => (
+export const DatasetList: React.SFC<DatasetListProps> = 
+    ({datasetList, maxDescriptionChars, keyword, selectedId, onDatasetListItemSelected, isLoading}) => (
     <GridContainer item={true}>
         <List>
             <ListItem disableGutters={true}><Typography variant="caption">{datasetList.length} datasets found for '{keyword}'</Typography></ListItem>
@@ -32,13 +34,14 @@ export const DatasetList: React.SFC<DatasetListProps> = ({datasetList, maxDescri
                                         .filter((dataset) => dataset.type === dataType)
                                         .map(
                                             (dataset, idx) => (
-                                                <DatasetListItem
-                                                    key={idx}
-                                                    dataset={dataset}
-                                                    selected={selectedId === dataset.id}
-                                                    maxDescriptionChars={maxDescriptionChars}
-                                                    onClick={onDatasetListItemSelected}
-                                                />
+                                                <Grow in={!isLoading} key={idx} timeout={250}>
+                                                    <DatasetListItem
+                                                        dataset={dataset}
+                                                        selected={selectedId === dataset.id}
+                                                        maxDescriptionChars={maxDescriptionChars}
+                                                        onClick={onDatasetListItemSelected}
+                                                    />
+                                                </Grow>
                                             )
                                         )
                                     }

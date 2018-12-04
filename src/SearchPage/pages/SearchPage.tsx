@@ -54,15 +54,16 @@ class SearchPageComponent extends React.Component<SearchPageProps> {
                                     maxDescriptionChars={64}
                                     keyword={this.props.searchKeyword}
                                     onDatasetListItemSelected={this.props.onDatasetSelected}
+                                    isLoading={this.props.loadingList}
                                     selectedId={this.props.selectedDataset ? this.props.selectedDataset.id : undefined}
                                 />
                             </GridScrollable>
                         </Grid>
                         <Grid container={true} item={true} xs={12} sm={6} md={4}>
                             <GridScrollable id="dataset-details" container={true} item={true} justify="center" style={this.props.width === 'xs' ? {height: '100vh'} : {}}>
-                                {this.props.loadingDetail ? (<Fade timeout={500} in={true}><CircularProgress /></Fade>) : ('')}
+                                {this.props.loadingDetail ? (<Fade timeout={250} in={true}><CircularProgress /></Fade>) : ('')}
                                 {this.props.selectedDataset ? (
-                                    <Fade timeout={500} in={true}><DatasetDetail dataset={this.props.selectedDataset } /></Fade>
+                                    <Fade timeout={250} in={!this.props.loadingDetail}><DatasetDetail dataset={this.props.selectedDataset } /></Fade>
                                 ) : <div />}
                             </GridScrollable>
                         </Grid>

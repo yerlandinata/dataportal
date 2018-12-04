@@ -1,4 +1,4 @@
-import { Divider, Grid, Grow, List, ListItem, Typography } from '@material-ui/core';
+import { Divider, Grid, Grow, LinearProgress, List, ListItem, Typography } from '@material-ui/core';
 import * as React from 'react';
 import { DatasetBrief, DatasetType, SearchQueryOrdering } from 'src/interfaces';
 import { GridContainer } from 'src/shared/components/GridContainer';
@@ -18,7 +18,11 @@ export const DatasetList: React.SFC<DatasetListProps> =
     ({datasetList, maxDescriptionChars, keyword, selectedId, onDatasetListItemSelected, isLoading}) => (
     <GridContainer item={true}>
         <List>
-            <ListItem disableGutters={true}><Typography variant="caption">{datasetList.length} datasets found for '{keyword}'</Typography></ListItem>
+            {(isLoading ? (
+                <ListItem disableGutters={true}><Grid container={true}><LinearProgress style={{width: '100%'}} /></Grid></ListItem>
+            ) : (
+                <ListItem disableGutters={true}><Typography variant="caption">{datasetList.length} dataset{datasetList.length > 1 ? 's' : ''} {keyword ? (<span>found for '{keyword}'</span>) : ''}</Typography></ListItem>
+            ))}
             {Object.keys(DatasetType)
                 .filter((datatype) => datasetList.some((dataset) => dataset.type === datatype))
                 .map(

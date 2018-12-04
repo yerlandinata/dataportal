@@ -17,10 +17,19 @@ const epicMiddleware = createEpicMiddleware({
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default function configureStore() {
-  const store = createStore(
-    rootReducer,
-    composeEnhancers(applyMiddleware(epicMiddleware))
+  const store = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? (
+    createStore(
+      rootReducer,
+      composeEnhancers(applyMiddleware(epicMiddleware))
+    )
+  ) : (
+    createStore(
+      rootReducer,
+      applyMiddleware(epicMiddleware)
+    )
   );
+  
+  
 
   epicMiddleware.run(rootEpic);
 
